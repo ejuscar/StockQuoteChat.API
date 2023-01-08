@@ -1,5 +1,5 @@
-using StockQuoteChat.API;
 using StockQuoteChat.API.Hubs;
+using StockQuoteChat.API.Models;
 using System.Security;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,7 +23,6 @@ app.UseRouting();
 
 app.UseCors();
 
-//app.MapGet("/", () => "Hello World!");
 app.MapHub<ChatHub>("/chat");
 
 app.Run();

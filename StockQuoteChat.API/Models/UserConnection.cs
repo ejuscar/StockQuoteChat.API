@@ -1,4 +1,4 @@
-﻿namespace StockQuoteChat.API
+﻿namespace StockQuoteChat.API.Models
 {
     public class UserConnection
     {
