@@ -43,22 +43,7 @@ namespace StockQuoteChat.API.Hubs
                 await Clients.Group(userConnection.Room)
                     .SendAsync("ReceiveMessage", userConnection.User, message);
 
-                if (message.ToLower().Contains(_command))
-                {
-                    var stockCode = message.ToLower()
-                        .Split(" ")
-                        .First(w => w.Contains(_command))
-                        ?.Replace(_command, "")!;
-
-                    ChatBotRequestDto chatBotRequest = new ChatBotRequestDto(userConnection.Room, stockCode);
-
-                    var requestContent = new StringContent(JsonSerializer.Serialize(chatBotRequest), Encoding.UTF8, "application/json");
-                    var response = await _httpClient.PostAsync("chatbot", requestContent);
-
-                    if (!response.IsSuccessStatusCode)
-                        await Clients.Group(userConnection.Room)
-                            .SendAsync("ReceiveMessage", _botUser, "An error occurred while trying to get the stock quote. Try again later.");
-                }
+                SendCommand(message, userConnection);
             }
         }
 
@@ -73,6 +58,30 @@ namespace StockQuoteChat.API.Hubs
             await Groups.AddToGroupAsync(Context.ConnectionId, userConnection.Room);
             _connections[Context.ConnectionId] = userConnection;
             
+        }
+
+        private async Task SendCommand(string message, UserConnection userConnection)
+        {
+            if (message.ToLower().Contains(_command))
+            {
+                var stockCode = message.ToLower()
+                    .Split(" ")
+                    .First(w => w.Contains(_command))
+                    ?.Replace(_command, "")!;
+
+                if (string.IsNullOrEmpty(stockCode))
+                    await Clients.Group(userConnection.Room)
+                        .SendAsync("ReceiveMessage", _botUser, "Stock Code cannot be empty.");
+
+                ChatBotRequestDto chatBotRequest = new ChatBotRequestDto(userConnection.Room, stockCode);
+
+                var requestContent = new StringContent(JsonSerializer.Serialize(chatBotRequest), Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync("chatbot", requestContent);
+
+                if (!response.IsSuccessStatusCode)
+                    await Clients.Group(userConnection.Room)
+                        .SendAsync("ReceiveMessage", _botUser, "An error occurred while trying to get the stock quote. Try again later.");
+            }
         }
     }
 }
