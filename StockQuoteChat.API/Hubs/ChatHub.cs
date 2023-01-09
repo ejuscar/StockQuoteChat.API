@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 using StockQuoteChat.API.Models;
 using System;
 using System.Net.Http;
@@ -47,6 +48,7 @@ namespace StockQuoteChat.API.Hubs
             }
         }
 
+        [Authorize]
         public async Task JoinRoom(UserConnection userConnection)
         {
             await AddUserToRoom(userConnection);
