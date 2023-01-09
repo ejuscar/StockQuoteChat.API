@@ -1,5 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using StockQuoteChat.API.Hubs;
 using StockQuoteChat.API.Models;
+using StockQuoteChat.Infrastructure;
 using System.Security;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,10 @@ builder.Services.AddCors(options =>
         .AllowCredentials();
     });
 });
+
+// DbContext
+builder.Services.AddDbContext<ChatDbContext>(
+        options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
