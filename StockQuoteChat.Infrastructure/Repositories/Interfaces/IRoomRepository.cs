@@ -2,9 +2,9 @@
 
 namespace StockQuoteChat.Infrastructure.Repositories.Interfaces
 {
-    public interface IUserRepository
+    public interface IRoomRepository
     {
-        User? Get(string email, string password);
-        User? Get(Guid id);
+        IQueryable<Room> GetAll(bool includeMessages);
+        Room? Get(Guid id);
     }
 }

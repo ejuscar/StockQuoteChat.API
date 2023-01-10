@@ -9,6 +9,7 @@ namespace StockQuoteChat.Infrastructure
         public DbSet<Message> Messages { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<UserRoom> UserRooms { get; set; }
 
         public ChatDbContext(DbContextOptions<ChatDbContext> options)
         : base(options)
@@ -19,15 +20,32 @@ namespace StockQuoteChat.Infrastructure
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Message>()
-                .HasOne(m => m.User)
-                .WithMany(u => u.Messages)
-                .HasForeignKey(m => m.UserId);
+            builder.Entity<UserRoom>()
+                .HasKey(ur => new { ur.UserId, ur.RoomId });
+
+            builder.Entity<User>()
+                .HasKey(u => u.Id);
+
+            builder.Entity<Room>()
+                .HasKey(r => r.Id);
 
             builder.Entity<Message>()
-                .HasOne(m => m.Room)
+                .HasKey(m => m.Id);
+
+            builder.Entity<UserRoom>()
+                .HasOne(ur => ur.Room)
+                .WithMany(r => r.UserRooms)
+                .HasForeignKey(ur => ur.RoomId);
+
+            builder.Entity<UserRoom>()
+                .HasOne(ur => ur.User)
+                .WithMany(u => u.UserRooms)
+                .HasForeignKey(ur => ur.UserId);
+
+            builder.Entity<Message>()
+                .HasOne(m => m.UserRoom)
                 .WithMany(u => u.Messages)
-                .HasForeignKey(m => m.RoomId);
+                .HasForeignKey(m => new { m.UserId, m.RoomId });
 
             new ChatDbContextSeed(builder).Seed();
         }

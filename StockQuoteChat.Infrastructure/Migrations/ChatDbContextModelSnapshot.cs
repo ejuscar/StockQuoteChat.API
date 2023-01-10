@@ -43,9 +43,7 @@ namespace StockQuoteChat.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoomId");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId", "RoomId");
 
                     b.ToTable("Messages");
                 });
@@ -67,12 +65,12 @@ namespace StockQuoteChat.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8bb6e697-973f-43e9-8e16-34f4ba4f7973"),
+                            Id = new Guid("4533c28e-1d83-45e5-bf1e-9592312e7b07"),
                             Name = "Room One"
                         },
                         new
                         {
-                            Id = new Guid("5afbe4a4-cc43-4c60-9b3b-f9b227128b6d"),
+                            Id = new Guid("df626fef-3144-419d-97a0-36060d627b27"),
                             Name = "Room Two"
                         });
                 });
@@ -106,7 +104,7 @@ namespace StockQuoteChat.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("08a0bb60-cbc9-46c4-a3e5-207564fdcf0f"),
+                            Id = new Guid("5df068f3-0e41-4748-ab42-e349cad71089"),
                             Email = "userone@email.com",
                             FirstName = "ChatUserOne",
                             LastName = "",
@@ -114,7 +112,7 @@ namespace StockQuoteChat.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("a31137cb-7ceb-464a-a0f9-e94476660979"),
+                            Id = new Guid("3c2f3df4-9439-4695-b166-5d4bda902e69"),
                             Email = "usertwo@email.com",
                             FirstName = "ChatUserTwo",
                             LastName = "",
@@ -122,16 +120,42 @@ namespace StockQuoteChat.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("StockQuoteChat.Application.Entities.UserRoom", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("RoomId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserId", "RoomId");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("UserRooms");
+                });
+
             modelBuilder.Entity("StockQuoteChat.Application.Entities.Message", b =>
                 {
-                    b.HasOne("StockQuoteChat.Application.Entities.Room", "Room")
+                    b.HasOne("StockQuoteChat.Application.Entities.UserRoom", "UserRoom")
                         .WithMany("Messages")
+                        .HasForeignKey("UserId", "RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserRoom");
+                });
+
+            modelBuilder.Entity("StockQuoteChat.Application.Entities.UserRoom", b =>
+                {
+                    b.HasOne("StockQuoteChat.Application.Entities.Room", "Room")
+                        .WithMany("UserRooms")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("StockQuoteChat.Application.Entities.User", "User")
-                        .WithMany("Messages")
+                        .WithMany("UserRooms")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -143,10 +167,15 @@ namespace StockQuoteChat.Infrastructure.Migrations
 
             modelBuilder.Entity("StockQuoteChat.Application.Entities.Room", b =>
                 {
-                    b.Navigation("Messages");
+                    b.Navigation("UserRooms");
                 });
 
             modelBuilder.Entity("StockQuoteChat.Application.Entities.User", b =>
+                {
+                    b.Navigation("UserRooms");
+                });
+
+            modelBuilder.Entity("StockQuoteChat.Application.Entities.UserRoom", b =>
                 {
                     b.Navigation("Messages");
                 });

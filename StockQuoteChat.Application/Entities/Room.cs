@@ -5,18 +5,18 @@
         public Room()
         {
             Id = Guid.NewGuid();
-            Messages = new HashSet<Message>();
+            UserRooms = new HashSet<UserRoom>();
         }
 
-        public Room(string name, ICollection<Message> messages)
+        public Room(string name, ICollection<UserRoom> userRooms)
         {
             Id = Guid.NewGuid();
             Name = name;
-            Messages = messages;
+            UserRooms = userRooms;
         }
 
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Message> Messages { get; set; }
+        public virtual ICollection<UserRoom> UserRooms { get; set; }
     }
 }

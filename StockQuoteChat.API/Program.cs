@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using StockQuoteChat.API;
 using StockQuoteChat.API.Hubs;
 using StockQuoteChat.API.Models;
+using StockQuoteChat.Application.Models;
 using StockQuoteChat.Infrastructure;
 using StockQuoteChat.Infrastructure.Repositories;
 using StockQuoteChat.Infrastructure.Repositories.Interfaces;
@@ -47,6 +49,24 @@ builder.Services.AddAuthentication(x =>
             ValidateIssuer = false,
             ValidateAudience = false
         };
+
+        x.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+
+                // If the request is for our hub...
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) &&
+                    (path.StartsWithSegments("/chat")))
+                {
+                    // Read the token out of the query string
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
+        };
     });
 
 // DbContext
@@ -54,7 +74,10 @@ builder.Services.AddDbContext<ChatDbContext>(
         options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 //IoC
+builder.Services.AddScoped<IUserRoomRepository, UserRoomRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())

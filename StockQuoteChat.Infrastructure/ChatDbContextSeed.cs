@@ -14,13 +14,13 @@ namespace StockQuoteChat.Infrastructure
         public void Seed()
         {
             _builder.Entity<User>().HasData(
-                new User("ChatUserOne", "", "userone@email.com", "123", new HashSet<Message>()),
-                new User("ChatUserTwo", "", "usertwo@email.com", "123", new HashSet<Message>())
+                new User("ChatUserOne", "", "userone@email.com", "123", new HashSet<UserRoom>()),
+                new User("ChatUserTwo", "", "usertwo@email.com", "123", new HashSet<UserRoom>())
                 );
 
             _builder.Entity<Room>().HasData(
-                new Room("Room One", new HashSet<Message>()),
-                new Room("Room Two", new HashSet<Message>())
+                new Room("Room One", new HashSet<UserRoom>()),
+                new Room("Room Two", new HashSet<UserRoom>())
                 );
         }
     }
