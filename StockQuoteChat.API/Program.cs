@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StockQuoteChat.API;
@@ -11,14 +12,18 @@ using StockQuoteChat.Infrastructure.Repositories.Interfaces;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-// Save the connectionId for the user
-builder.Services.AddSingleton<IDictionary<string, UserConnection>>(opts => new Dictionary<string, UserConnection>());
+ConfigurationHelper.Initialize(builder.Configuration);
+
+//IoC
+builder.Services.InjectDependencies();
+
 builder.Services.AddSignalR();
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
     {
-        builder.WithOrigins("http://localhost:3000")
+        builder.WithOrigins(ConfigurationHelper.Config.GetSection("UIUrl").Value!)
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
@@ -26,7 +31,8 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+#region Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>
 {
@@ -55,8 +61,10 @@ builder.Services.AddSwaggerGen(option =>
         }
     });
 });
+#endregion Swagger
 
-var key = Encoding.ASCII.GetBytes(Settings.Secret);
+#region Authentication-Authorization-Jwt
+var key = Encoding.ASCII.GetBytes(ConfigurationHelper.Config.GetSection("JwtOptions:SecurityKey").Value!);
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -92,16 +100,7 @@ builder.Services.AddAuthentication(x =>
             }
         };
     });
-
-// DbContext
-builder.Services.AddDbContext<ChatDbContext>(
-        options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-//IoC
-builder.Services.AddScoped<IUserRoomRepository, UserRoomRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IRoomRepository, RoomRepository>();
-builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+#endregion Authentication-Authorization-Jwt
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())

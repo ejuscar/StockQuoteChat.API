@@ -18,9 +18,9 @@ namespace StockQuoteChat.API.Hubs
 
         public ChatHub(IDictionary<string, UserConnection> connections, IMessageRepository messageRepository, IUserRoomRepository userRoomRepository)
         {
-            _botGroupName = "BotGroup";
+            _botGroupName = ConfigurationHelper.Config.GetSection("ChatOptions:BotGroupName").Value;
             _connections = connections;
-            _command = "/stock=";
+            _command = ConfigurationHelper.Config.GetSection("ChatOptions:StockCommand").Value;
             _messageRepository = messageRepository;
             _userRoomRepository = userRoomRepository;
         }
