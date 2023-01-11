@@ -5,9 +5,11 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockQuoteChat.API", "StockQuoteChat.API\StockQuoteChat.API.csproj", "{FEDA03BC-D8A3-48B7-B8F8-97690E4B488A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockQuoteChat.Bot.Receiver", "StockQuoteChat.Bot.Receiver\StockQuoteChat.Bot.Receiver.csproj", "{EFFACB03-0765-41B4-8A1A-A8C079F49BAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockQuoteChat.Application", "StockQuoteChat.Application\StockQuoteChat.Application.csproj", "{C54A6502-C366-4DF4-93CB-7FCDDE14B273}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockQuoteChat.Bot.Sender", "StockQuoteChat.Bot.Sender\StockQuoteChat.Bot.Sender.csproj", "{D0D9CFE8-D563-40CD-8F1E-4D76AEC67453}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockQuoteChat.Infrastructure", "StockQuoteChat.Infrastructure\StockQuoteChat.Infrastructure.csproj", "{BB7A146C-D2BF-44C4-97E2-E06A1BA5A4D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockQuoteChat.Test", "StockQuoteChat.Test\StockQuoteChat.Test.csproj", "{074324AE-FFF4-4799-B852-590D5663960C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +21,18 @@ Global
 		{FEDA03BC-D8A3-48B7-B8F8-97690E4B488A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEDA03BC-D8A3-48B7-B8F8-97690E4B488A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEDA03BC-D8A3-48B7-B8F8-97690E4B488A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EFFACB03-0765-41B4-8A1A-A8C079F49BAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EFFACB03-0765-41B4-8A1A-A8C079F49BAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EFFACB03-0765-41B4-8A1A-A8C079F49BAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EFFACB03-0765-41B4-8A1A-A8C079F49BAA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D0D9CFE8-D563-40CD-8F1E-4D76AEC67453}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D0D9CFE8-D563-40CD-8F1E-4D76AEC67453}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D0D9CFE8-D563-40CD-8F1E-4D76AEC67453}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D0D9CFE8-D563-40CD-8F1E-4D76AEC67453}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C54A6502-C366-4DF4-93CB-7FCDDE14B273}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C54A6502-C366-4DF4-93CB-7FCDDE14B273}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C54A6502-C366-4DF4-93CB-7FCDDE14B273}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C54A6502-C366-4DF4-93CB-7FCDDE14B273}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB7A146C-D2BF-44C4-97E2-E06A1BA5A4D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB7A146C-D2BF-44C4-97E2-E06A1BA5A4D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB7A146C-D2BF-44C4-97E2-E06A1BA5A4D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB7A146C-D2BF-44C4-97E2-E06A1BA5A4D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{074324AE-FFF4-4799-B852-590D5663960C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{074324AE-FFF4-4799-B852-590D5663960C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{074324AE-FFF4-4799-B852-590D5663960C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{074324AE-FFF4-4799-B852-590D5663960C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
