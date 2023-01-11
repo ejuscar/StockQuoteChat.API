@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockQuoteChat.Application"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockQuoteChat.Infrastructure", "StockQuoteChat.Infrastructure\StockQuoteChat.Infrastructure.csproj", "{BB7A146C-D2BF-44C4-97E2-E06A1BA5A4D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockQuoteChat.Test", "StockQuoteChat.Test\StockQuoteChat.Test.csproj", "{074324AE-FFF4-4799-B852-590D5663960C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{BB7A146C-D2BF-44C4-97E2-E06A1BA5A4D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB7A146C-D2BF-44C4-97E2-E06A1BA5A4D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB7A146C-D2BF-44C4-97E2-E06A1BA5A4D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{074324AE-FFF4-4799-B852-590D5663960C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{074324AE-FFF4-4799-B852-590D5663960C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{074324AE-FFF4-4799-B852-590D5663960C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{074324AE-FFF4-4799-B852-590D5663960C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

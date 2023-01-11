@@ -30,7 +30,7 @@ namespace StockQuoteChat.API.Controllers
             var user = _repository.Get(loginRequest.Email, loginRequest.Password);
 
             if (user == null)
-                return NotFound(new ApiResponseDto<string> (string.Empty, false, "Invalid credentials"));
+                return NotFound(new ApiResponseDto<LoginResponseDto> (null, false, "Invalid credentials"));
 
             var token = TokenService.GenerateToken(user);
 
