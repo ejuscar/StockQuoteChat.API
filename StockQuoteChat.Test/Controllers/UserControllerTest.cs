@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Moq;
+using StockQuoteChat.API;
 using StockQuoteChat.API.Controllers;
 using StockQuoteChat.Application.Entities;
 using StockQuoteChat.Application.Models.Requests;
@@ -23,6 +25,15 @@ namespace StockQuoteChat.Test.Controllers
 
         public UserControllerTest()
         {
+            var inMemorySettings = new Dictionary<string, string> {
+                {"JwtOptions:SecurityKey", "K|kT\"u{\"a04e%$}Swie1'-JGFT~CP>"},
+            };
+
+            IConfiguration configuration = new ConfigurationBuilder()
+                .AddInMemoryCollection(inMemorySettings)
+                .Build();
+
+            ConfigurationHelper.Initialize(configuration);
             var user = new User("User", "", USER_EMAIL, USER_PASSWORD, new HashSet<UserRoom>());
             _mockRepository = new Mock<IUserRepository>();
             _mockRepository.Setup(m => m.Get(WRONG_USER_EMAIL, WRONG_USER_PASSWORD)).Returns<User>(null);
@@ -34,7 +45,8 @@ namespace StockQuoteChat.Test.Controllers
         [TestMethod]
         public void ShouldReturnNotFound_WhenInvalidCredentials()
         {
-            var request = new LoginRequestDto {
+            var request = new LoginRequestDto
+            {
                 Email = WRONG_USER_EMAIL,
                 Password = WRONG_USER_PASSWORD
             };
@@ -55,7 +67,8 @@ namespace StockQuoteChat.Test.Controllers
         [TestMethod]
         public void ShouldReturnOk_WhenValidCredentials()
         {
-            var request = new LoginRequestDto {
+            var request = new LoginRequestDto
+            {
                 Email = USER_EMAIL,
                 Password = USER_PASSWORD
             };
