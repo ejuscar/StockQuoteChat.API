@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using StockQuoteChat.Infrastructure;
@@ -11,9 +12,11 @@ using StockQuoteChat.Infrastructure;
 namespace StockQuoteChat.Infrastructure.Migrations
 {
     [DbContext(typeof(ChatDbContext))]
-    partial class ChatDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230110052555_Add_Bot_User_Seed")]
+    partial class AddBotUserSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,12 +68,12 @@ namespace StockQuoteChat.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("3913a673-5f6b-4177-938f-3d83516482d7"),
+                            Id = new Guid("e087c588-23c6-4831-aaf5-fe4e0fe2d37e"),
                             Name = "Room One"
                         },
                         new
                         {
-                            Id = new Guid("070344f1-018a-4443-8732-0a87ec7a5aa7"),
+                            Id = new Guid("3d47ff74-c701-4c5e-ad96-8c5dba9452a7"),
                             Name = "Room Two"
                         });
                 });
@@ -89,9 +92,6 @@ namespace StockQuoteChat.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("IsBot")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -107,28 +107,25 @@ namespace StockQuoteChat.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6ae683b2-cdad-40c9-be04-34792ae196e3"),
+                            Id = new Guid("7ee0312b-172f-4cd5-a95a-102dd8e1aa0e"),
                             Email = "userone@email.com",
                             FirstName = "ChatUserOne",
-                            IsBot = false,
                             LastName = "",
                             Password = "123"
                         },
                         new
                         {
-                            Id = new Guid("c8233f80-bc22-4886-9f26-64878f554da8"),
+                            Id = new Guid("5663a1bb-32a6-4456-97b6-d7af18a46f4b"),
                             Email = "usertwo@email.com",
                             FirstName = "ChatUserTwo",
-                            IsBot = false,
                             LastName = "",
                             Password = "123"
                         },
                         new
                         {
-                            Id = new Guid("98085ba7-b79a-4d54-b857-9a7aa302bf19"),
+                            Id = new Guid("8f97f319-9056-4a5c-a3a5-7599f07c28e6"),
                             Email = "mychatbot@chatmail.com",
                             FirstName = "Bot",
-                            IsBot = true,
                             LastName = "",
                             Password = "botexamplepassword"
                         });

@@ -15,7 +15,8 @@ namespace StockQuoteChat.Infrastructure
         {
             _builder.Entity<User>().HasData(
                 new User("ChatUserOne", "", "userone@email.com", "123", new HashSet<UserRoom>()),
-                new User("ChatUserTwo", "", "usertwo@email.com", "123", new HashSet<UserRoom>())
+                new User("ChatUserTwo", "", "usertwo@email.com", "123", new HashSet<UserRoom>()),
+                new User("Bot", "", "mychatbot@chatmail.com", "botexamplepassword", new HashSet<UserRoom>(), true)
                 );
 
             _builder.Entity<Room>().HasData(
